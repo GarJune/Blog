@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garjune.github.io/blog/"/>
-  <updated>2020-03-06T04:34:01.276Z</updated>
+  <updated>2020-03-06T09:56:04.410Z</updated>
   <id>https://garjune.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringMVC工作流程</title>
+    <link href="https://garjune.github.io/blog/2020/03/06/SpringMVC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/"/>
+    <id>https://garjune.github.io/blog/2020/03/06/SpringMVC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/</id>
+    <published>2020-03-06T09:36:24.000Z</published>
+    <updated>2020-03-06T09:56:04.410Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h1 id=&quot;SpringMVC工作流程&quot;&gt;&lt;a href=&quot;#SpringMVC工作流程&quot; class=&quot;headerlink&quot; title=&quot;SpringMVC工作流程&quot;&gt;&lt;/a&gt;SpringMVC工作流程&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Hello World</title>
