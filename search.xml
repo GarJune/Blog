@@ -5,7 +5,7 @@
     <url>/blog/2020/03/06/SpringMVC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="SpringMVC工作流程"><a href="#SpringMVC工作流程" class="headerlink" title="SpringMVC工作流程"></a>SpringMVC工作流程</h1><hr>
 <p> SpringMVC的核心在于它的流程，所以了解SpringMVC的工作流程对于我们使用SpringMVC非常重要，SpringMVC是一种基于Servlet的技术，它提供了核心控制器DispatcherServlet和相关组件。其流程图：</p>
-<p><a href="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2715697938.png" target="_blank" rel="noopener">流程图</a></p>
+<p><img src="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2715697938.png" alt="流程图"></p>
 <p>1.首先用户发送一个请求到服务器，在使用springMVC之前，我们应该在web.xml对DispatcherServlet进行配置过了：</p>
 <pre><code>&lt;!--使用Spring MVC,配置DispatcherServlet是第一步。DispatcherServlet是一个Servlet,,所以可以配置多个DispatcherServlet--&gt;  
    &lt;servlet&gt;  
