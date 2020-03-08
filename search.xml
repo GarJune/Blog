@@ -39,6 +39,9 @@
 <p>3.在初始化MybatisAutoConfiguration时，由于sqlSessionFactory(DataSource dataSource)和sqlSessionTemplate(SqlSessionFactory sqlSessionFactory)这两个方法上有@Bean和  @ConditionalOnMissingBean<br>这两个注解，因此spring会在用户没有自定义sqlSessionFactory或sqlSessionTemplate的情况下自动使用MybatisProperties这个类从配置文件读取的值来进行初始化，若没有在配置文件读取到对应到属性，则会使用默认值</p>
 <p>4.最后，我们感受到的效果是，只要引入mybatis-spring-boot-starter这个依赖，就可以使用mybatis对数据进行访问，而dataSource,sqlSessionFactory这些东西有时候我们自己配置也可以，不配置也可以的原因。</p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
       <tags>
         <tag>spring</tag>
       </tags>
@@ -212,6 +215,9 @@ protected void renderMergedOutputModel(
 }</code></pre><p>可以看到，这个方法完成了最后把视图封装好和把结果返回给用户的操作</p>
 <p>参考：<a href="https://segmentfault.com/a/1190000008471934" target="_blank" rel="noopener">DispatcherServlet来看spring mvc请求处理过程</a><br><a href="https://segmentfault.com/a/1190000015263978" target="_blank" rel="noopener">SpringMVC之源码分析–View（一）</a></p>
 ]]></content>
+      <categories>
+        <category>技术</category>
+      </categories>
       <tags>
         <tag>spring</tag>
       </tags>
