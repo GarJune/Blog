@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>SpringBoot简化配置原理以及Mybatis-spring-boot-starter原理探索</title>
-    <url>/2020/03/08/SpringBoot%E7%AE%80%E5%8C%96%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AMybatis-spring-boot-starter%E5%8E%9F%E7%90%86%E6%8E%A2%E7%B4%A2/</url>
+    <url>/blog/2020/03/08/SpringBoot%E7%AE%80%E5%8C%96%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AMybatis-spring-boot-starter%E5%8E%9F%E7%90%86%E6%8E%A2%E7%B4%A2/</url>
     <content><![CDATA[<h2 id="Spring-Boot-Starter简化开发原理"><a href="#Spring-Boot-Starter简化开发原理" class="headerlink" title="Spring Boot Starter简化开发原理"></a>Spring Boot Starter简化开发原理</h2><p>在我刚学spring的时候，让我印象深刻的是各种xml的配置，而且很多配置是这个项目配一遍，开新项目时又把旧项目的配置复制一遍，而且比较容易出错，调试一下又要费不少的时间。Starter简化了这些繁琐的配置，遵循Spring Boot“约定大约配置”的理念，在我们不主动进行配置时给予默认的属性，而且很多情况下这些属性都不需要更改。这是怎么实现的呢？<br>在SpringApplication这个类，也就是启动类上有一个@SpringApplication的注解，该注解是由@SpringBootConfiguration,@EnableAutoConfiguration,@ComponentScan这三个注解组合而成</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Documented</span><br><span class="line">@Inherited</span><br><span class="line">@SpringBootConfiguration</span><br><span class="line">@EnableAutoConfiguration</span><br><span class="line">@ComponentScan(excludeFilters &#x3D; &#123; @Filter(type &#x3D; FilterType.CUSTOM, classes &#x3D; TypeExcludeFilter.class),</span><br><span class="line">		@Filter(type &#x3D; FilterType.CUSTOM, classes &#x3D; AutoConfigurationExcludeFilter.class) &#125;)</span><br><span class="line">public @interface SpringBootApplication &#123;</span><br><span class="line">    &#x2F;&#x2F;不重要的内容忽略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>点开@EnableAutoConfiguration,可以看到该注解导入了一个AutoConfigurationImportSelector的类</p>
@@ -45,7 +45,7 @@
   </entry>
   <entry>
     <title>SpringMVC工作流程</title>
-    <url>/2020/03/06/SpringMVC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/</url>
+    <url>/blog/2020/03/06/SpringMVC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h1 id="SpringMVC工作流程"><a href="#SpringMVC工作流程" class="headerlink" title="SpringMVC工作流程"></a>SpringMVC工作流程</h1><hr>
 <p> SpringMVC的核心在于它的流程，所以了解SpringMVC的工作流程对于我们使用SpringMVC非常重要，SpringMVC是一种基于Servlet的技术，它提供了核心控制器DispatcherServlet和相关组件。其流程图：</p>
 <p><img src="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2715697938.png" alt="流程图"></p>
