@@ -1,312 +1,141 @@
-<!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next pisces use-motion" lang="zh-Hans">
+<!DOCTYPE HTML>
+<html class="no-js" lang="zh-CN">
 <head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-<meta name="theme-color" content="#222">
+    <!--[if lte IE 9]>
+<meta http-equiv="refresh" content="0;url=https://garjune.github.io/blog/warn.html">
+<![endif]-->
+<meta charset="utf-8">
+<meta http-equiv="X-DNS-Prefetch-Control" content="on">
+<link rel="dns-prefetch" href="https://garjune.github.io/blog">
+<link rel="dns-prefetch" href="//www.google-analytics.com">
+<link rel="prefetch" href="https://garjune.github.io/blog">
+<link rel="prefetch" href="//www.google-analytics.com">
 
 
+<link rel="prerender" href="https://garjune.github.io/blog">
 
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+<meta http-equiv="mobile-agent" content="format=html5; url=https://garjune.github.io/blog">
+<meta name="author" content="GarJun">
 
+<link rel="stylesheet" href="/blog/css/JSimple.css">
 
 
+<link rel="shortcut icon" href="/blog/images/favicon.png">
 
 
+<title>springboot简化配置原理以及mybatis-spring-boot-starter原理探索 - GarJun博客</title>
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="keywords" content="">
 
+<meta name="description " content="">
 
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {
+                inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                processEscapes: true
+            }
+        });
+    </script>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/blog/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
-
-
-
-
-
-
-
-<link href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
-
-<link href="/blog/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/blog/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="spring," />
-
-
-
-
-  
-
-
-  <link rel="alternate" href="/blog/atom.xml" title="GarJun博客" type="application/atom+xml" />
-
-
-
-
-
-
-<meta name="description" content="Spring Boot Starter简化开发原理在我刚学spring的时候，让我印象深刻的是各种xml的配置，而且很多配置是这个项目配一遍，开新项目时又把旧项目的配置复制一遍，而且比较容易出错，调试一下又要费不少的时间。Starter简化了这些繁琐的配置，遵循Spring Boot“约定大约配置”的理念，在我们不主动进行配置时给予默认的属性，而且很多情况下这些属性都不需要更改。这是怎么实现的呢？">
-<meta property="og:type" content="article">
-<meta property="og:title" content="SpringBoot简化配置原理以及Mybatis-spring-boot-starter原理探索">
-<meta property="og:url" content="https://garjune.github.io/blog/2020/03/08/SpringBoot%E7%AE%80%E5%8C%96%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AMybatis-spring-boot-starter%E5%8E%9F%E7%90%86%E6%8E%A2%E7%B4%A2/index.html">
-<meta property="og:site_name" content="GarJun博客">
-<meta property="og:description" content="Spring Boot Starter简化开发原理在我刚学spring的时候，让我印象深刻的是各种xml的配置，而且很多配置是这个项目配一遍，开新项目时又把旧项目的配置复制一遍，而且比较容易出错，调试一下又要费不少的时间。Starter简化了这些繁琐的配置，遵循Spring Boot“约定大约配置”的理念，在我们不主动进行配置时给予默认的属性，而且很多情况下这些属性都不需要更改。这是怎么实现的呢？">
-<meta property="og:image" content="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2020030801.jpg">
-<meta property="og:image" content="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2020030803.jpg">
-<meta property="article:published_time" content="2020-03-08T12:18:03.000Z">
-<meta property="article:modified_time" content="2020-03-08T12:26:09.763Z">
-<meta property="article:author" content="GarJun">
-<meta property="article:tag" content="spring">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2020030801.jpg">
-
-
-
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/blog/',
-    scheme: 'Pisces',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: '博主'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
-  };
-</script>
-
-
-
-  <link rel="canonical" href="https://garjune.github.io/blog/2020/03/08/SpringBoot简化配置原理以及Mybatis-spring-boot-starter原理探索/"/>
-
-
-
-
-
-  <title>SpringBoot简化配置原理以及Mybatis-spring-boot-starter原理探索 | GarJun博客</title>
-  
-
-
-
-
-
-
-
-
-<meta name="generator" content="Hexo 4.2.0"></head>
-
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
     
 
-    <div class="custom-logo-site-title">
-      <a href="/blog/"  class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">GarJun博客</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-      
-        <p class="site-subtitle"></p>
-      
-  </div>
+    
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
-  </div>
+<meta name="generator" content="Hexo 4.2.0"><link rel="alternate" href="/blog/atom.xml" title="GarJun博客" type="application/atom+xml">
+</head>
+<body>
+<div id="nav">
+    <nav class="nav-menu">
+        <a class="site-name current" href="/" title="Garjun">Garjun</a>
+        <a class="site-index current" href="/"><i class="fa fa-home"></i><span>Home</span></a>
+        <a href="/archives" title="Archives"><i class="fa fa-archives"></i><span>Archives</span></a>
+        <a href="/tags" title="Tags"><i class="fa fa-tags"></i><span>Tags</span></a>
+        <!-- custom single page of menus -->
+        
+        
+        <a href="/help" title="帮助">
+            <i class="fa fa-question-circle"></i>
+            <span>帮助</span>
+        </a>
+        
+    </nav>
 </div>
 
-<nav class="site-nav">
-  
+<div class="nav-user">
+    <a class="btn-search" href="#"><i class="fa fa-search"></i></a>
+    <a class="btn-read-mode" href="#"><i class="fa fa-sun-o"></i></a>
+    <a class="btn-sns-qr" href="javascript:"><i class="fa fa-telegram"></i></a>
+</div>
 
-  
-    <ul id="menu" class="menu">
-      
+<div id="wrapper" class="clearfix">
+    <div id="body">
+        <div class="main" id="main">
+            <div id="cover">
+    <div class="cover-img"></div>
+    <div class="cover-info">
         
-        <li class="menu-item menu-item-home">
-          <a href="/blog/%20" rel="section">
+        <h1 class="cover-siteName">GarJun博客</h1>
+        <h3 class="cover-siteTitle">用代码摇滚这个世界</h3>
+        <p class="cover-siteDesc">一个关注技术与人文的IT博客</p>
+        <div class="cover-sns">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
-            
-            首页
-          </a>
-        </li>
-      
-        
-        <li class="menu-item menu-item-archives">
-          <a href="/blog/archives/%20" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
+    &nbsp;&nbsp;<div class="btn btn-github">
+        <a href="https://github.com/GarJune" target="_blank" title="github" ref="friend">
+            <i class="fa fa-github"></i>
+        </a>
+    </div>
 
-      
-    </ul>
-  
-
-  
-</nav>
-
-
-
- </div>
-    </header>
-
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
-    
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://garjune.github.io/blog/blog/2020/03/08/SpringBoot%E7%AE%80%E5%8C%96%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AMybatis-spring-boot-starter%E5%8E%9F%E7%90%86%E6%8E%A2%E7%B4%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="GarJun">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/blog/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="GarJun博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">SpringBoot简化配置原理以及Mybatis-spring-boot-starter原理探索</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-08T20:18:03+08:00">
-                2020-03-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
-      </header>
-    
+    </div>
+</div>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+            <div class="page-title">
+    <ul>
+        <li><a href="/">Recent Posts</a></li>
+        
+        
+        
+        <li class="page-search">
+    <form id="search" class="search-form">
+        <input type="text"
+               readonly="readonly"
+               id="local-search-input-tip"
+               placeholder="click to search..." />
+        <button type="button" disabled="disabled" class="search-form-submit"><i class="fa fa-search"></i></button>
+    </form>
+</li>
 
-      
-      
-
-      
-        <h2 id="Spring-Boot-Starter简化开发原理"><a href="#Spring-Boot-Starter简化开发原理" class="headerlink" title="Spring Boot Starter简化开发原理"></a>Spring Boot Starter简化开发原理</h2><p>在我刚学spring的时候，让我印象深刻的是各种xml的配置，而且很多配置是这个项目配一遍，开新项目时又把旧项目的配置复制一遍，而且比较容易出错，调试一下又要费不少的时间。Starter简化了这些繁琐的配置，遵循Spring Boot“约定大约配置”的理念，在我们不主动进行配置时给予默认的属性，而且很多情况下这些属性都不需要更改。这是怎么实现的呢？<br>在SpringApplication这个类，也就是启动类上有一个@SpringApplication的注解，该注解是由@SpringBootConfiguration,@EnableAutoConfiguration,@ComponentScan这三个注解组合而成</p>
+    </ul>
+</div>
+<div class="main-inner">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <div class="post-header">
+            <div class="post-author clearfix">
+                <a class="avatar fleft" href="https://github.com/GarJune/blog"
+                   target="_blank">
+                    <img width="48" src="/images/favicon.png" alt="avatar"/>
+                </a>
+                <p><span class="label">Author</span>
+                    <a href="https://github.com/GarJune/blog"
+                       target="_blank">GarJun_Blog</a>
+                    <span title="Last edited at&nbsp;2020-03-08">2020-03-08</span>
+                </p>
+                <p>Garjun_Blog</p>
+            </div>
+            <h2 class="post-title">SpringBoot简化配置原理以及Mybatis-spring-boot-starter原理探索</h2>
+            <div class="post-meta">
+                emm... 17323 words in the article |
+                you are the&nbsp;<span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span>th friend who reading now
+            </div>
+        </div>
+        <div class="post-content markdown-body">
+            <h2 id="Spring-Boot-Starter简化开发原理"><a href="#Spring-Boot-Starter简化开发原理" class="headerlink" title="Spring Boot Starter简化开发原理"></a>Spring Boot Starter简化开发原理</h2><p>在我刚学spring的时候，让我印象深刻的是各种xml的配置，而且很多配置是这个项目配一遍，开新项目时又把旧项目的配置复制一遍，而且比较容易出错，调试一下又要费不少的时间。Starter简化了这些繁琐的配置，遵循Spring Boot“约定大约配置”的理念，在我们不主动进行配置时给予默认的属性，而且很多情况下这些属性都不需要更改。这是怎么实现的呢？<br>在SpringApplication这个类，也就是启动类上有一个@SpringApplication的注解，该注解是由@SpringBootConfiguration,@EnableAutoConfiguration,@ComponentScan这三个注解组合而成</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Documented</span><br><span class="line">@Inherited</span><br><span class="line">@SpringBootConfiguration</span><br><span class="line">@EnableAutoConfiguration</span><br><span class="line">@ComponentScan(excludeFilters &#x3D; &#123; @Filter(type &#x3D; FilterType.CUSTOM, classes &#x3D; TypeExcludeFilter.class),</span><br><span class="line">		@Filter(type &#x3D; FilterType.CUSTOM, classes &#x3D; AutoConfigurationExcludeFilter.class) &#125;)</span><br><span class="line">public @interface SpringBootApplication &#123;</span><br><span class="line">    &#x2F;&#x2F;不重要的内容忽略</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>点开@EnableAutoConfiguration,可以看到该注解导入了一个AutoConfigurationImportSelector的类</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">@Target(ElementType.TYPE)</span><br><span class="line">@Retention(RetentionPolicy.RUNTIME)</span><br><span class="line">@Documented</span><br><span class="line">@Inherited</span><br><span class="line">@AutoConfigurationPackage</span><br><span class="line">@Import(AutoConfigurationImportSelector.class)</span><br><span class="line">public @interface EnableAutoConfiguration &#123;</span><br><span class="line"></span><br><span class="line">   String ENABLED_OVERRIDE_PROPERTY &#x3D; &quot;spring.boot.enableautoconfiguration&quot;;</span><br><span class="line"></span><br><span class="line">   &#x2F;**</span><br><span class="line">    * Exclude specific auto-configuration classes such that they will never be applied.</span><br><span class="line">    * @return the classes to exclude</span><br><span class="line">    *&#x2F;</span><br><span class="line">   Class&lt;?&gt;[] exclude() default &#123;&#125;;</span><br><span class="line"></span><br><span class="line">   &#x2F;**</span><br><span class="line">    * Exclude specific auto-configuration class names such that they will never be</span><br><span class="line">    * applied.</span><br><span class="line">    * @return the class names to exclude</span><br><span class="line">    * @since 1.3.0</span><br><span class="line">    *&#x2F;</span><br><span class="line">   String[] excludeName() default &#123;&#125;;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -342,384 +171,104 @@
 <p>3.在初始化MybatisAutoConfiguration时，由于sqlSessionFactory(DataSource dataSource)和sqlSessionTemplate(SqlSessionFactory sqlSessionFactory)这两个方法上有@Bean和  @ConditionalOnMissingBean<br>这两个注解，因此spring会在用户没有自定义sqlSessionFactory或sqlSessionTemplate的情况下自动使用MybatisProperties这个类从配置文件读取的值来进行初始化，若没有在配置文件读取到对应到属性，则会使用默认值</p>
 <p>4.最后，我们感受到的效果是，只要引入mybatis-spring-boot-starter这个依赖，就可以使用mybatis对数据进行访问，而dataSource,sqlSessionFactory这些东西有时候我们自己配置也可以，不配置也可以的原因。</p>
 
-      
-    </div>
-    
-    
-    
+            
+                
 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/blog/tags/spring/" rel="tag"># spring</a>
-          
+            
         </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/blog/2020/03/06/SpringMVC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" rel="next" title="SpringMVC工作流程">
-                <i class="fa fa-chevron-left"></i> SpringMVC工作流程
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-
-
-
+        <div class="post-tool">
+            <a class="btn-thumbs-up" href="javascript:void(0);" data-cid="52" title="95">
+                <i class="fa fa-thumbs-up" aria-hidden="true"></i> Donate
+            </a>
         </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
-
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="post-tags">Tags：
             
-              <p class="site-author-name" itemprop="name">GarJun</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
+            <a href="/blog/tags/spring/">spring</a>
             
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/blog/archives/%20%7C%7C%20archive">
-              
-                  <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">日志</span>
-                </a>
-              </div>
-            
-
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                
-                  <span class="site-state-item-count">1</span>
-                  <span class="site-state-item-name">标签</span>
-                
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/blog/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
         </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Boot-Starter简化开发原理"><span class="nav-number">1.</span> <span class="nav-text">Spring Boot Starter简化开发原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mybatis-spring-boot-starter-原理探索"><span class="nav-number">2.</span> <span class="nav-text">mybatis-spring-boot-starter 原理探索</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-
-    </div>
-  </aside>
-
-
         
-      </div>
-    </main>
+    </article>
+    
+        <p style="text-align: center">This article just represents my own viewpoint. If there is something wrong, please correct me.</p>
+    
+    
+    
 
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">GarJun</span>
-
-  
 </div>
 
-
-  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
-
-
-
-  <span class="post-meta-divider">|</span>
+<script src="/blog/js/busuanzi.pure.mini.js"></script>
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+        </div><!-- end #main-->
+    </div><!-- end #body -->
+    <footer class="footer">
+    <div class="footer-inner" style="text-align: center">
+        <p>
+            <a href="/about"  title="About">About</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <!-- 自定义链接 -->
+            <a href="/help" title="Help" >Help</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/links" title="Links">Links</a>&nbsp;&nbsp<em>·</em>&nbsp;&nbsp
+            <a href="/sitemap.xml" title="SiteMap">SiteMap</a>
+        </p>
+        <p>
+            Has been established&nbsp<a href="/timeline" id="siteBuildingTime"></a>&nbspDays，<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" rel="licence">Based on Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</a><br/>
+            ©2017-<span id="cpYear"></span> Based on&nbsp<a href="http://hexo.io" target="_blank" rel="nofollow">Hexo</a>
+            ，Theme by&nbsp&nbsp<a href="https://github.com/tangkunyin/hexo-theme-jsimple" target="_blank" rel="bookmark">JSimple</a>
+            ，Author&nbsp<a href="https://github.com/GarJune/blog" target="_blank" rel="friend">GarJun_Blog</a>
+            ，Hosted by <a href="https://pages.github.com/" target="_blank" rel="nofollow">GitHub Pages</a>
+        </p>
+    </div>
+</footer>
+
+<script src="/blog/js/SimpleCore.js"></script>
 
 
-
-
+</div>
+<!-- search pop -->
+<div class="popup search-popup local-search-popup">
+    <div class="local-search-header clearfix">
+        <span class="search-icon">
+            <i class="fa fa-search"></i>
+        </span>
+        <span class="popup-btn-close">
+            <i class="fa fa-times-circle"></i>
+        </span>
+        <div class="local-search-input-wrapper">
+            <input id="local-search-input"
+                   spellcheck="false"
+                   type="text"
+                   autocomplete="off"
+                   placeholder="Input query keywords here..."/>
+        </div>
+    </div>
+    <div id="local-search-result"></div>
+</div>
+<div class="fixed-btn">
+    <a class="btn-gotop" href="javascript:"> <i class="fa fa-angle-up"></i></a>
+</div>
+<script>
+    $(function () {
+        var jsi_config = {
+            buildingTime: '01/20/2018',
+            current: $('.post-tags').length > 0 ? 'post' : 'archive',
+            snsQRCode: '/images/sns-qrcode.png',
+            donateImg: '/images/donate-qr.png',
+            localSearch: { dbPath: '' },
+            readMode: 'day'
+        };
         
-
-
-
-
-
-
-
+            jsi_config.localSearch = {
+                dbPath: '/search.xml',
+                trigger: 'auto',
+                topN: '1',
+                unescape: 'false'
+            }
         
-      </div>
-    </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
+        SimpleCore.init(jsi_config);
         
-      </div>
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
+    });
 </script>
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/blog/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/blog/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/blog/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/blog/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/blog/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/blog/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/blog/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/blog/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/blog/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/blog/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/blog/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  
-
-
-
-
-	
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
 </body>
 </html>
