@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garjune.github.io/blog/"/>
-  <updated>2020-03-06T11:41:28.685Z</updated>
+  <updated>2020-03-08T12:18:28.159Z</updated>
   <id>https://garjune.github.io/blog/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>SpringBoot简化配置原理以及Mybatis-spring-boot-starter原理探索</title>
+    <link href="https://garjune.github.io/blog/2020/03/08/SpringBoot%E7%AE%80%E5%8C%96%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AMybatis-spring-boot-starter%E5%8E%9F%E7%90%86%E6%8E%A2%E7%B4%A2/"/>
+    <id>https://garjune.github.io/blog/2020/03/08/SpringBoot%E7%AE%80%E5%8C%96%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AMybatis-spring-boot-starter%E5%8E%9F%E7%90%86%E6%8E%A2%E7%B4%A2/</id>
+    <published>2020-03-08T12:18:03.000Z</published>
+    <updated>2020-03-08T12:18:28.159Z</updated>
+    
+    <summary type="html">
+    
+      
+      
+        
+        
+          &lt;h2 id=&quot;Spring-Boot-Starter简化开发原理&quot;&gt;&lt;a href=&quot;#Spring-Boot-Starter简化开发原理&quot; class=&quot;headerlink&quot; title=&quot;Spring Boot Starter简化开发原理&quot;&gt;&lt;/a&gt;Spring
+        
+      
+    
+    </summary>
+    
+    
+    
+  </entry>
   
   <entry>
     <title>SpringMVC工作流程</title>
