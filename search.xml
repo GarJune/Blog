@@ -40,7 +40,7 @@
 <p>4.最后，我们感受到的效果是，只要引入mybatis-spring-boot-starter这个依赖，就可以使用mybatis对数据进行访问，而dataSource,sqlSessionFactory这些东西有时候我们自己配置也可以，不配置也可以的原因。</p>
 ]]></content>
       <categories>
-        <category>技术</category>
+        <category>tech</category>
       </categories>
       <tags>
         <tag>spring</tag>
@@ -216,7 +216,7 @@ protected void renderMergedOutputModel(
 <p>参考：<a href="https://segmentfault.com/a/1190000008471934" target="_blank" rel="noopener">DispatcherServlet来看spring mvc请求处理过程</a><br><a href="https://segmentfault.com/a/1190000015263978" target="_blank" rel="noopener">SpringMVC之源码分析–View（一）</a></p>
 ]]></content>
       <categories>
-        <category>技术</category>
+        <category>tech</category>
       </categories>
       <tags>
         <tag>spring</tag>

@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://garjune.github.io/blog/"/>
-  <updated>2020-03-08T16:35:30.342Z</updated>
+  <updated>2020-03-08T16:51:05.658Z</updated>
   <id>https://garjune.github.io/blog/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://garjune.github.io/blog/2020/03/08/SpringBoot%E7%AE%80%E5%8C%96%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AMybatis-spring-boot-starter%E5%8E%9F%E7%90%86%E6%8E%A2%E7%B4%A2/"/>
     <id>https://garjune.github.io/blog/2020/03/08/SpringBoot%E7%AE%80%E5%8C%96%E9%85%8D%E7%BD%AE%E5%8E%9F%E7%90%86%E4%BB%A5%E5%8F%8AMybatis-spring-boot-starter%E5%8E%9F%E7%90%86%E6%8E%A2%E7%B4%A2/</id>
     <published>2020-03-08T12:18:03.000Z</published>
-    <updated>2020-03-08T16:35:30.342Z</updated>
+    <updated>2020-03-08T16:51:05.658Z</updated>
     
     <summary type="html">
     
@@ -36,7 +36,7 @@
     </summary>
     
     
-      <category term="技术" scheme="https://garjune.github.io/blog/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="tech" scheme="https://garjune.github.io/blog/categories/tech/"/>
     
     
       <category term="spring" scheme="https://garjune.github.io/blog/tags/spring/"/>
@@ -48,7 +48,7 @@
     <link href="https://garjune.github.io/blog/2020/03/06/SpringMVC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/"/>
     <id>https://garjune.github.io/blog/2020/03/06/SpringMVC%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/</id>
     <published>2020-03-06T09:36:24.000Z</published>
-    <updated>2020-03-08T16:35:55.895Z</updated>
+    <updated>2020-03-08T16:50:50.392Z</updated>
     
     <summary type="html">
     
@@ -64,7 +64,7 @@
     </summary>
     
     
-      <category term="技术" scheme="https://garjune.github.io/blog/categories/%E6%8A%80%E6%9C%AF/"/>
+      <category term="tech" scheme="https://garjune.github.io/blog/categories/tech/"/>
     
     
       <category term="spring" scheme="https://garjune.github.io/blog/tags/spring/"/>
