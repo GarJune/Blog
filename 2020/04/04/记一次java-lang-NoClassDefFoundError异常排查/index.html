@@ -92,7 +92,7 @@
 <meta property="og:image" content="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2020040401.png">
 <meta property="og:image" content="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2020040402.png">
 <meta property="article:published_time" content="2020-04-04T10:21:15.000Z">
-<meta property="article:modified_time" content="2020-04-04T10:22:05.153Z">
+<meta property="article:modified_time" content="2020-04-04T10:27:16.547Z">
 <meta property="article:author" content="GarJun">
 <meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
@@ -417,7 +417,18 @@ at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
   &lt;/archive&gt;</code></pre><p>使用jar-gui解开jar包，查看里面的MANIFEST.MF文件，终于发现问题：<br><img src="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2020040401.png" alt="MANIFEST"></p>
 <p>在MANIFEST.MF文件中，指定引入的lib包的名字有一个时间戳，而lib文件夹下的文件名为</p>
 <pre><code>jae-meta-config-1.8-SNAPSHOT.jar</code></pre><p>因此，在使用java -jar命令运行时，会找不到对应的类<br>随之而来的问题是，为什么会有这样的一个时间戳？<br>在仔细查看maven的文档后发现<br><img src="https://garjun-blog-1255506252.cos.ap-guangzhou.myqcloud.com/2020/2020040402.png" alt="maven文档"></p>
-<p>maven有一个useUniqueVersions的配置，该配置的作用是在生产MANIFES.MF文件时，SNATSHOP版本的jar包是否要打上唯一版本时间戳，该配置默认值为true,因此jae-meta-config-1.8-SNAPSHOT.jar 变成了 jae-jbaseclient-2.0.2-20191104.060124-1.jar。导致找不到对应的jar包，启动报错。重新打包配置，将该配置设为false<br>        <archive><br>            <manifest><br>              <mainClass>com.jodo.jododata.notify.cp.realtime.RealTimeMarketNotifyMain</mainClass><br>              <addClasspath>true</addClasspath><br>              <classpathPrefix>lib/</classpathPrefix><br>              <useUniqueVersions>false</useUniqueVersions><br>            </manifest><br>            <manifestEntries><br>              <Class-Path>conf/</Class-Path><br>            </manifestEntries><br>          </archive><br>而后使用java -jar的方式启动，一切正常<br>至此，真相大白</p>
+<p>maven有一个useUniqueVersions的配置，该配置的作用是在生产MANIFES.MF文件时，SNATSHOP版本的jar包是否要打上唯一版本时间戳，该配置默认值为true,因此jae-meta-config-1.8-SNAPSHOT.jar 变成了 jae-jbaseclient-2.0.2-20191104.060124-1.jar。导致找不到对应的jar包，启动报错。重新打包配置，将该配置设为false</p>
+<pre><code>&lt;archive&gt;
+   &lt;manifest&gt;
+     &lt;mainClass&gt;com.jodo.jododata.notify.cp.realtime.RealTimeMarketNotifyMain&lt;/mainClass&gt;
+     &lt;addClasspath&gt;true&lt;/addClasspath&gt;
+     &lt;classpathPrefix&gt;lib/&lt;/classpathPrefix&gt;
+     &lt;useUniqueVersions&gt;false&lt;/useUniqueVersions&gt;
+   &lt;/manifest&gt;
+   &lt;manifestEntries&gt;
+     &lt;Class-Path&gt;conf/&lt;/Class-Path&gt;
+   &lt;/manifestEntries&gt;
+ &lt;/archive&gt;</code></pre><p>而后使用java -jar的方式启动，一切正常<br>至此，真相大白</p>
 <h2 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h2><ol>
 <li>java -jar 和 -cp 同时使用时，-cp的配置是不生效的，java会根据MANIFEST.MF的配置来启动</li>
 <li>maven 打包时，useUniqueVersions配置如果默认时打开的，如果用到了SNATSHOP版本的依赖包，应该特别注意，要么使用java -cp的方式启动，如果要使用java -jar的方式启动，最好将该配置设为false</li>
