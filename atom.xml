@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.garjun.xyz/"/>
-  <updated>2020-03-16T10:44:22.968Z</updated>
+  <updated>2020-04-04T10:22:05.153Z</updated>
   <id>https://blog.garjun.xyz/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>记一次java.lang.NoClassDefFoundError异常排查</title>
+    <link href="https://blog.garjun.xyz/2020/04/04/%E8%AE%B0%E4%B8%80%E6%AC%A1java-lang-NoClassDefFoundError%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/"/>
+    <id>https://blog.garjun.xyz/2020/04/04/%E8%AE%B0%E4%B8%80%E6%AC%A1java-lang-NoClassDefFoundError%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/</id>
+    <published>2020-04-04T10:21:15.000Z</published>
+    <updated>2020-04-04T10:22:05.153Z</updated>
+    
+    <summary type="html">
+    
+      记录成长历程
+    
+    </summary>
+    
+    
+    
+      <category term="java" scheme="https://blog.garjun.xyz//tags/java/"/>
+    
+  </entry>
   
   <entry>
     <title>2020述职报告</title>
