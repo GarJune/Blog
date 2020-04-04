@@ -117,6 +117,9 @@ at java.lang.ClassLoader.loadClass(ClassLoader.java:351)
 <li>maven 打包时，useUniqueVersions配置如果默认时打开的，如果用到了SNATSHOP版本的依赖包，应该特别注意，要么使用java -cp的方式启动，如果要使用java -jar的方式启动，最好将该配置设为false</li>
 </ol>
 ]]></content>
+      <categories>
+        <category>tech</category>
+      </categories>
       <tags>
         <tag>java</tag>
       </tags>

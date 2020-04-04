@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.garjun.xyz/"/>
-  <updated>2020-04-04T10:44:28.594Z</updated>
+  <updated>2020-04-04T10:48:53.712Z</updated>
   <id>https://blog.garjun.xyz/</id>
   
   <author>
@@ -21,14 +21,23 @@
     <link href="https://blog.garjun.xyz/2020/04/04/%E8%AE%B0%E4%B8%80%E6%AC%A1java-lang-NoClassDefFoundError%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/"/>
     <id>https://blog.garjun.xyz/2020/04/04/%E8%AE%B0%E4%B8%80%E6%AC%A1java-lang-NoClassDefFoundError%E5%BC%82%E5%B8%B8%E6%8E%92%E6%9F%A5/</id>
     <published>2020-04-04T10:21:15.000Z</published>
-    <updated>2020-04-04T10:44:28.594Z</updated>
+    <updated>2020-04-04T10:48:53.712Z</updated>
     
     <summary type="html">
     
-      记录成长历程
+      
+      
+        
+        
+          &lt;p&gt;最近在把项目发到生产环境时，遇到了这样到一个错误，解决这个问题着实花费了不少到时间：&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Exception in thread &amp;quot;main&amp;quot; java.lang.NoClassDefFoundError:
+        
+      
     
     </summary>
     
+    
+      <category term="tech" scheme="https://blog.garjun.xyz/categories/tech/"/>
     
     
       <category term="java" scheme="https://blog.garjun.xyz//tags/java/"/>
